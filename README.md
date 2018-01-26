@@ -1,4 +1,4 @@
-### Store
+## Store
 #### Notes
 - Store holds the state tree of the application. It is an object that contains a few methods: `getState()`, `dispatch()`, `subscribe()`, `replaceReducer()`.
 - Store is considered the single source of truth for the entire application.
@@ -59,7 +59,7 @@ store.getState()
 replaceReducer(nextReducer);
 ```
 
-### Action
+## Action
 #### Notes
 - Action is a plain object that represents an intention to change the state.
 - Action is the only way to get data into the store.
@@ -68,7 +68,7 @@ replaceReducer(nextReducer);
 - Action should be constructed based on Flux standard action for consistency.
 - Action creator: function that returns action object.
 
-### Reducer
+## Reducer
 #### Notes
 - Reducer is a function which takes the current state, and returns a new state depending on the action it was given.
 - Reducer contains all business logic and manipulates the `state` in the `store`.
@@ -85,7 +85,7 @@ replaceReducer(nextReducer);
  */
 combineReducer(slices);
 ```
-### Middleware
+## Middleware
 #### Syntax
 ```javascript
 store => next => action => {
@@ -116,13 +116,7 @@ applyMiddleware(...args);
 
 <br>
 
-### Selectors
-#### Notes
-#### Notes
-
-<br>
-
-### Redux Workflow
+## Redux Workflow
 - Create root reducer, which describes the app's state and all its logic.
 - Create Redux Store using `createStore(reducer)` and pass the main reducer to it.
 - Call `store.dispatch(actionCreator())` to make changes in Store
@@ -209,7 +203,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 <br>
 
-### React Redux Workflow
+## React Redux Workflow
 ```
 mapDispatchToProps -> Action Creator -> Middlewares -> Reducers -> Store -> mapStateToProps
     |                                                                               |
