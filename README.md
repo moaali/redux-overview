@@ -65,7 +65,13 @@ store.replaceReducer(nextReducer);
 - Action is the only way to get data into the store.
 - Action must have a `type` property that indicates the type of action being performed.
 - Action types can be defined as constants and imported from another module.
-- Action should be constructed based on Flux standard action for consistency.
+- Action should be constructed based on Flux standard action (FSA) for consistency.
+  - Action MUST be a plain JavaScript object.
+  - Action MUST have a `type` property.
+  - Action MAY have an `error` property.
+  - Action MAY have a `payload` property.
+  - Action MAY have a `meta` property.
+  - Action MUST NOT include properties other than `type`, `payload`, `error`, and `meta`.
 - Action creator: function that returns action object.
 
 ## Reducer
