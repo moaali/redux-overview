@@ -34,7 +34,7 @@ store.dispatch(actionObject);
  * Calls all callbacks in subscribed components each time the store changes.
  * Updates UI on state changes .
  *
- * @param  {Object} listener Callback function called on state changes.
+ * @param  {Function} listener Callback function called on state changes.
  * @return {Void}
  */
 store.subscribe(listener);
@@ -56,7 +56,7 @@ store.getState()
  * @param  {Function} nextReducer Reducer function injected.
  * @return {Viod}.
  */
-replaceReducer(nextReducer);
+store.replaceReducer(nextReducer);
 ```
 
 ## Action
