@@ -34,7 +34,7 @@ store.dispatch(actionObject);
  * Calls all callbacks in subscribed components each time the store changes.
  * Updates UI on state changes .
  *
- * @param  {Object} listener Callback function called on state changes.
+ * @param  {Function} listener Callback function called on state changes.
  * @return {Void}
  */
 store.subscribe(listener);
@@ -56,7 +56,7 @@ store.getState()
  * @param  {Function} nextReducer Reducer function injected.
  * @return {Viod}.
  */
-replaceReducer(nextReducer);
+store.replaceReducer(nextReducer);
 ```
 
 ## Action
@@ -65,7 +65,13 @@ replaceReducer(nextReducer);
 - Action is the only way to get data into the store.
 - Action must have a `type` property that indicates the type of action being performed.
 - Action types can be defined as constants and imported from another module.
-- Action should be constructed based on Flux standard action for consistency.
+- Action should be constructed based on Flux standard action (FSA) for consistency.
+  - Action MUST be a plain JavaScript object.
+  - Action MUST have a `type` property.
+  - Action MAY have an `error` property.
+  - Action MAY have a `payload` property.
+  - Action MAY have a `meta` property.
+  - Action MUST NOT include properties other than `type`, `payload`, `error`, and `meta`.
 - Action creator: function that returns action object.
 
 ## Reducer
@@ -255,7 +261,7 @@ function mapStateToProps(state) {
 
 ## Do's & Don'ts
 - Don't mutate payload object!.
-- Don't use `store.getState()` in `render()` (because it must be pure), so save store data in component `state` instead.
+- Don't use `store.getState()` in `render()`, try to save store data in component `state` instead.
 - Don't mutate received state in reducer, otherwise Redux will not update the components!.
 - Don't use Redux store for storing "localized" data when you're dealing with state that doesn't affect other components, component state is a solid choice for this case.
 
@@ -268,8 +274,8 @@ function mapStateToProps(state) {
 + Do use **selectors** , always, inside `mapStateToProps` instead of writing the computation logic diretly to it.
 + Do use `Reselect` for selectors that need to be memoized.
 + Do use `redux-actions` to reduce boilerplate and enforce *FSA-compliant* actions.
-+ Do name action like: `<NOUN>_<VERB>`.
++ Do name action like: `<VERB>_<NOUN>`.
 + Do name action creator: `<verb><Noun>`.
 + Do name selector: `get<Noun>`.
-+ DO build your reducers using `redux-actions` `handleActions()`.
-+ DO structure your Redux files with the Ducks pattern in a single folder (often called flux/, ducks/, or stores/).
++ Do build your reducers using `redux-actions` `handleActions()`.
++ Do structure your Redux files with the Ducks pattern in a single folder (often called flux/, ducks/, or stores/).
