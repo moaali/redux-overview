@@ -274,7 +274,7 @@ function mapStateToProps(state) {
 + Do use **selectors** , always, inside `mapStateToProps` instead of writing the computation logic diretly to it.
 + Do use `Reselect` for selectors that need to be memoized.
 + Do use `redux-actions` to reduce boilerplate and enforce *FSA-compliant* actions.
-+ Do name action like: `<NOUN>_<VERB>`.
++ Do name action like: `<VERB>_<NOUN>`.
 + Do name action creator: `<verb><Noun>`.
 + Do name selector: `get<Noun>`.
 + Do build your reducers using `redux-actions` `handleActions()`.
