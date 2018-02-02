@@ -1,87 +1,97 @@
-// consts/index.js
-export const SHOW_MODAL = 'ui/SHOW_MODAL'
-export const HIDE_MODAL = 'ui/HIDE_MODAL'
+// constants.js
+export const SHOW_SIDEBAR = 'SHOW_SIDEBAR';
+export const HIDE_SIDEBAR = 'HIDE_SIDEBAR';
+export const SHOW_MENU = 'SHOW_MENU';
+export const HIDE_MENU = 'HIDE_MENU';
 
 
-// reducers/ui.js
-import { SHOW_MODAL, HIDE_MODAL } from '../consts'
+// actions.js
+import { createAction } from 'redux-actions';
+import {
+  SHOW_SIDEBAR,
+  HIDE_SIDEBAR,
+  SHOW_MENU,
+  HIDE_MENU,
+} from './constants';
 
-const initialState = {
-  activeModal: null
-}
+export const showSidebar = createAction(SHOW_SIDEBAR);
+export const hideSidebar = createAction(HIDE_SIDEBAR);
+export const showMenu = createAction(SHOW_MENU);
+export const hideMenu = createAction(HIDE_MENU);
 
-export const reducer = handleActions({
-  [SHOW_MODAL]: (state, action) => ({
+
+// sidebarReducer.js
+import { handleActions } from 'redux-actions';
+import { SHOW_SIDEBAR, HIDE_SIDEBAR } from './constants';
+
+export default const sidebarReducer = handleActions({
+  [SHOW_SIDEBAR]: (state, action) => ({
     ...state,
-    activeModal: action.payload,
+    isSidebarShown: action.payload,
   }),
-  [HIDE_MODAL]: (state, action) => ({
+  [HIDE_SIDEBAR]: (state, action) => ({
     ...state,
-    activeModal: null
-  })
-})
+    isSidebarShown: null,
+  }),
+});
+
+// menuReducer.js
+import { handleActions } from 'redux-actions';
+import {SHOW_MENU, HIDE_MENU } from './constants';
+
+export default const menuReducer = handleActions({
+  [SHOW_MENU]: (state, action) => ({
+    ...state,
+    isMenuShown: action.payload,
+  }),
+  [HIDE_MENU]: (state, action) => ({
+    ...state,
+    isMenuShown: null,
+  }),
+});
+
+// reducers/index.js
+import { combineReducers } from 'redux';
+import sidebarReducer from './sidebarReducer';
+import menuReducer from './menuReducer';
+
+export default const rootReducer = combineReducers({
+  isSidebarShown: sidebarReducer,
+  isMenuShown: menuReducer,
+});
 
 
-// actions/Modal.js
-import { createAction } from 'redux-actions'
-import { SHOW_MODAL, HIDE_MODAL } from '../consts'
+// store.js
+import { createStore } from 'redux';
+import rootReducer from './reducers';
 
-export const showHeader = createAction(SHOW_HEADER)
-export const hideHeader = createAction(HIDE_HEADER)
-
-
-// containers/Modal.js
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { hideModal as hideModalActionCreator } from 'reducers/ui'
-import Modal from '../components/Modal'
-
-const mapStateToProps = (state) => ({
-  activeModal: state.ui.activeModal
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  hideModal: hideModalActionCreator
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Modal)
+export default const store = createStore(rootReducer);
 
 
-//components/Modal.js
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import ReactModal from 'react-modal'
+// containers/Menu.js
+import connect from 'react-redux';
+import { showMenu } from '../actions';
+import Menu from '../components/Menu';
 
-const Modal = ({ activeModal, hideModal }) => {
-  if (!activeModal) {
-    return null
-  }
-  
-  const Component = activeModal.component
-  const { props, modalProps } = activeModal
-  const renderCloseButton = () => (
-    <div className="absolute rd-black p2 align-middle right-0">
-      ×
-    </div>
-  )
-  
+const mapStateToProps = state => {
+  isMenuShown: state.isMenuShown,
+};
+
+const mapDispatchToProps = {
+  showMenu: showMenu
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+
+
+// component/Menu.js
+import React from 'react';
+
+export default const Menu = ({ isMenuShown, showMenu }) => {
   return (
-    <ReactModal
-      contentLabel="modal"
-      overlayClassName="fixed top-0 right-0 bottom-0 left-0 bg-transparent-black z10000 webkit-overflow overflow-scroll"
-      className="outline-style-none border-box relative md-px4 mx-auto min-height-100 height-100"
-    >
-      {header || (
-        <div onClick={hideModal} className="block">
-          {this.renderCloseButton()}
-        </div>
-      )}
-      {<Component {...props} />}
-    </ReactModal>
-  )
-}
-
-Modal.propTypes = {
-  activeModal: PropTypes.object,
-  hideModal: PropTypes.func.isRequired
-}
+    <button onClick={ shownMenu }></button>
+    <div className={isMenuShown ? 'shown' : 'hidden'}>
+      ...
+    </div>
+  );
+};
