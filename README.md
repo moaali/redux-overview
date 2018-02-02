@@ -261,7 +261,7 @@ function mapStateToProps(state) {
 
 ## Do's & Don'ts
 - Don't mutate payload object!.
-- Don't use `store.getState()` in `render()` (because it must be pure), so save store data in component `state` instead.
+- Don't use `store.getState()` in `render()`, try to save store data in component `state` instead.
 - Don't mutate received state in reducer, otherwise Redux will not update the components!.
 - Don't use Redux store for storing "localized" data when you're dealing with state that doesn't affect other components, component state is a solid choice for this case.
 
