@@ -277,5 +277,5 @@ function mapStateToProps(state) {
 + Do name action like: `<NOUN>_<VERB>`.
 + Do name action creator: `<verb><Noun>`.
 + Do name selector: `get<Noun>`.
-+ DO build your reducers using `redux-actions` `handleActions()`.
-+ DO structure your Redux files with the Ducks pattern in a single folder (often called flux/, ducks/, or stores/).
++ Do build your reducers using `redux-actions` `handleActions()`.
++ Do structure your Redux files with the Ducks pattern in a single folder (often called flux/, ducks/, or stores/).
